@@ -32,7 +32,7 @@ public class BulletController : MonoBehaviour
         // まっすぐ前（ローカル座標の上方向）に移動
         // 注意: 弾のプレハブやスプライトが「上向き」を「前」として作られている前提
         // もし「右向き」が前なら Vector3.right を使う
-        transform.Translate(Vector3.up * speed * Time.deltaTime, Space.Self);
+        transform.Translate(Vector3.down * speed * Time.deltaTime, Space.Self);
 
         // 寿命タイマーを減らす
         lifeTimer -= Time.deltaTime;
