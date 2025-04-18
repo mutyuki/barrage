@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="6" result="Failed(Child)" total="6" passed="5" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2025-04-17 14:08:18Z" end-time="2025-04-17 14:08:23Z" duration="5.2202329">
+  <test-suite type="TestSuite" id="1012" name="barrage" fullname="barrage" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2025-04-17 14:08:18Z" end-time="2025-04-17 14:08:23Z" duration="5.220233" total="6" passed="5" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1008" name="Tests.dll" fullname="/Users/kitamurareiki/develop/barrage/Library/ScriptAssemblies/Tests.dll" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2025-04-17 14:08:18Z" end-time="2025-04-17 14:08:23Z" duration="5.168532" total="6" passed="5" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="19583" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestFixture" id="1001" name="GameplayPlayModeTests" fullname="GameplayPlayModeTests" classname="GameplayPlayModeTests" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2025-04-17 14:08:18Z" end-time="2025-04-17 14:08:23Z" duration="5.147071" total="6" passed="5" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-case id="1005" name="Bullet_DisappearsAndReturnsToPool_AfterLifetime" fullname="GameplayPlayModeTests.Bullet_DisappearsAndReturnsToPool_AfterLifetime" methodname="Bullet_DisappearsAndReturnsToPool_AfterLifetime" classname="GameplayPlayModeTests" runstate="Runnable" seed="1729623736" result="Passed" start-time="2025-04-17 14:08:18Z" end-time="2025-04-17 14:08:21Z" duration="3.329858" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1004" name="Bullet_MovesUpward_WhenActivatedWithIdentityRotation" fullname="GameplayPlayModeTests.Bullet_MovesUpward_WhenActivatedWithIdentityRotation" methodname="Bullet_MovesUpward_WhenActivatedWithIdentityRotation" classname="GameplayPlayModeTests" runstate="Runnable" seed="1865605669" result="Passed" start-time="2025-04-17 14:08:22Z" end-time="2025-04-17 14:08:22Z" duration="0.598799" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1006" name="Enemy_FiresAimedShot_Forward_WhenTargetNotFound" fullname="GameplayPlayModeTests.Enemy_FiresAimedShot_Forward_WhenTargetNotFound" methodname="Enemy_FiresAimedShot_Forward_WhenTargetNotFound" classname="GameplayPlayModeTests" runstate="Runnable" seed="914800068" result="Passed" start-time="2025-04-17 14:08:22Z" end-time="2025-04-17 14:08:22Z" duration="0.348699" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Executing Pattern: 
+Target with tag 'Untagged' not found. Firing forward.
+]]></output>
+        </test-case>
+        <test-case id="1007" name="Enemy_FiresFanShot_WithCorrectCountAndApproximateSpread" fullname="GameplayPlayModeTests.Enemy_FiresFanShot_WithCorrectCountAndApproximateSpread" methodname="Enemy_FiresFanShot_WithCorrectCountAndApproximateSpread" classname="GameplayPlayModeTests" runstate="Runnable" seed="2116831338" result="Failed" start-time="2025-04-17 14:08:22Z" end-time="2025-04-17 14:08:23Z" duration="0.655101" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[  Incorrect number of bullets found for fan pattern. Expected 5, but found 9.
+  Expected: 5
+  But was:  9
+]]></message>
+            <stack-trace><![CDATA[at GameplayPlayModeTests+<Enemy_FiresFanShot_WithCorrectCountAndApproximateSpread>d__15.MoveNext () [0x0013b] in /Users/kitamurareiki/develop/barrage/Assets/Tests/GamePlayTests/GameplayPlayModeTests.cs:298
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:44
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Executing Pattern: 
+Executing Pattern: 
+]]></output>
+        </test-case>
+        <test-case id="1002" name="Pooler_GetBullet_ReturnsInactiveObjectAndDecreasesPoolCount" fullname="GameplayPlayModeTests.Pooler_GetBullet_ReturnsInactiveObjectAndDecreasesPoolCount" methodname="Pooler_GetBullet_ReturnsInactiveObjectAndDecreasesPoolCount" classname="GameplayPlayModeTests" runstate="Runnable" seed="1395119273" result="Passed" start-time="2025-04-17 14:08:23Z" end-time="2025-04-17 14:08:23Z" duration="0.068222" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1003" name="Pooler_ReturnBullet_DeactivatesObjectAndIncreasesPoolCount" fullname="GameplayPlayModeTests.Pooler_ReturnBullet_DeactivatesObjectAndIncreasesPoolCount" methodname="Pooler_ReturnBullet_DeactivatesObjectAndIncreasesPoolCount" classname="GameplayPlayModeTests" runstate="Runnable" seed="2071585351" result="Passed" start-time="2025-04-17 14:08:23Z" end-time="2025-04-17 14:08:23Z" duration="0.071294" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Saving results to: /Users/kitamurareiki/Library/Application Support/DefaultCompany/barrage/TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

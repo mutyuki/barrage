@@ -1,50 +1,53 @@
-// Assets/Scripts/Patterns/BarragePatternData.cs
+// 例: AimedPatternData.cs や SplitterPatternData.cs など
 using System.Collections;
 using UnityEngine;
 
-// ScriptableObjectを作成するためのメニュー項目を追加
-[CreateAssetMenu(fileName = "NewBarragePattern", menuName = "Gameplay/Barrage Pattern Data")]
 public abstract class BarragePatternData : ScriptableObject
 {
-    // 全パターン共通で使いそうな設定
-    public GameObject bulletPrefab; // 使用する弾のプレハブ
+    // 共通設定 (各派生クラスで使う弾プレハブを設定)
+    public GameObject bulletPrefab; // ★ 発射する弾のプレハブ
     public float bulletSpeed = 5f;
-    public float bulletLifetime = 3f;
+    public float bulletLifetime = 3f; // ★ 注意: このlifetimeはStraightBulletでは使われるが、SplitterBulletでは使われない設計になっている
 
-    // public AudioClip fireSound; // 効果音など
+    // 子クラスが実装するメソッド (AdvancedObjectPoolerを使う)
+    public abstract IEnumerator ExecutePattern(Transform firePoint, AdvancedObjectPooler pooler);
 
-    // このパターンを実行する抽象メソッド (派生クラスで具体的な処理を実装)
-    // 引数には発射位置などの情報が必要
-    // コルーチンで実行することが多いので IEnumerator を返す設計も一般的
-    public abstract IEnumerator ExecutePattern(Transform firePoint, SimpleObjectPooler pooler);
-
-    // --- ヘルパー関数 (共通で使う発射処理など) ---
-    // 派生クラスから使えるように protected または public にする
+    // ★ ShootSingleBullet ヘルパー関数を IBullet 対応に修正
     protected void ShootSingleBullet(
-        SimpleObjectPooler pooler,
+        AdvancedObjectPooler pooler,
+        GameObject prefabToShoot,
         Transform firePoint,
         Vector3 direction,
-        float speed,
-        float lifetime
+        float speed
     )
     {
-        GameObject bulletGO = pooler.GetBullet();
+        if (pooler == null || prefabToShoot == null)
+            return;
+
+        GameObject bulletGO = pooler.GetObject(prefabToShoot); // ★ 使用するプレハブを指定
         if (bulletGO != null)
         {
-            // ここで指定されたプレハブを使うように調整が必要かもしれない
-            // (現状 pooler は1種類しか扱えないため、複数弾種対応には pooler の改造も必要)
-            // ※ 今回は PatternData 側の bulletPrefab は一旦無視して Pooler のを使用
-
-            bulletGO.transform.position = firePoint.position;
-            bulletGO.transform.up = direction.normalized;
-
-            BulletController bc = bulletGO.GetComponent<BulletController>();
-            if (bc != null)
+            IBullet bulletInterface = bulletGO.GetComponent<IBullet>(); // ★ IBullet を取得
+            if (bulletInterface != null)
             {
-                bc.speed = speed;
-                bc.lifetime = lifetime;
+                Quaternion rotation = Quaternion.FromToRotation(Vector3.up, direction.normalized);
+                bulletInterface.Initialize(firePoint.position, rotation, speed); // ★ Initialize を呼び出す
+                bulletGO.SetActive(true); // Initialize の後にアクティブ化
             }
-            bulletGO.SetActive(true);
+            else
+            {
+                Debug.LogError(
+                    $"弾プレハブ {prefabToShoot.name} に IBullet 実装がありません！",
+                    prefabToShoot
+                );
+                pooler.ReturnObject(bulletGO); // 使えないので戻す
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"弾 {prefabToShoot.name} の取得に失敗 (プール空か未登録?)");
         }
     }
+
+    // (旧) ExecutePattern(Transform firePoint, SimpleObjectPooler pooler, float dynamicAngleOffset = 0f) は不要になる
 }

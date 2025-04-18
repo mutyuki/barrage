@@ -1,0 +1,329 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+// プールするオブジェクトの情報を持つ構造体 (インスペクターで設定しやすくするため)
+[System.Serializable]
+public struct PoolInfo
+{
+    public GameObject prefab; // プールするプレハブ
+    public int initialSize; // 初期プールサイズ
+    public string poolKey; // (オプション) 文字列でアクセスするためのキー
+
+    // poolKeyが空の場合、プレハブのインスタンスIDをキーとして使うための準備
+    public string GetKey()
+    {
+        if (!string.IsNullOrEmpty(poolKey))
+        {
+            return poolKey;
+        }
+        // プレハブが null でないことを確認
+        if (prefab != null)
+        {
+            // プレハブの InstanceID は一意なのでキーとして利用できる
+            return prefab.GetInstanceID().ToString();
+        }
+        // poolKey も prefab も null の場合は無効なキー
+        return null;
+    }
+}
+
+// ★ プールされたオブジェクトが、どのプール(キー)に戻るべきかを知るためのコンポーネント
+//    弾のプレハブに事前にこれをアタッチしておくか、生成時に動的に追加する
+public class PooledObject : MonoBehaviour
+{
+    public string poolKey; // 自身が属するプールのキー
+    public AdvancedObjectPooler ownerPooler; // 自身を管理するプーラー
+}
+
+public class AdvancedObjectPooler : MonoBehaviour
+{
+    // --- シングルトンインスタンス ---
+    public static AdvancedObjectPooler Instance { get; private set; }
+
+    // --- インスペクター設定 ---
+    [Header("Pool Configuration")]
+    [Tooltip("プールしたいオブジェクトのリスト")]
+    public List<PoolInfo> poolsToCreate = new List<PoolInfo>();
+
+    [Header("Dynamic Instantiation")]
+    [Tooltip("プールが空の時に動的に新しいオブジェクトを生成するか")]
+    public bool allowDynamicInstantiation = true;
+
+    // --- プールの実体 (内部データ) ---
+    // string キー (PoolInfo.GetKey() で取得) に対して、非アクティブなオブジェクトのキューを保持
+    private Dictionary<string, Queue<GameObject>> pooledObjects =
+        new Dictionary<string, Queue<GameObject>>();
+
+    // string キーに対応する元のプレハブを保持 (動的生成のため)
+    private Dictionary<string, GameObject> keyToPrefab = new Dictionary<string, GameObject>();
+
+    void Awake()
+    {
+        // シングルトン設定
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning(
+                "複数の AdvancedObjectPooler が存在します。最新のもの以外を破棄します。",
+                gameObject
+            );
+            Destroy(this.gameObject);
+            return;
+        }
+    }
+
+    void Start()
+    {
+        InitializePools();
+    }
+
+    // プールの初期化処理
+    private void InitializePools()
+    {
+        foreach (PoolInfo poolInfo in poolsToCreate)
+        {
+            string key = poolInfo.GetKey();
+
+            // 有効なキーとプレハブがあるかチェック
+            if (string.IsNullOrEmpty(key) || poolInfo.prefab == null)
+            {
+                Debug.LogError(
+                    $"PoolInfo に無効な設定があります (Key: {key}, Prefab: {poolInfo.prefab?.name})。このプールは無視されます。",
+                    this
+                );
+                continue;
+            }
+
+            // キーが重複していないかチェック
+            if (pooledObjects.ContainsKey(key))
+            {
+                Debug.LogWarning(
+                    $"プールキー '{key}' (Prefab: {poolInfo.prefab.name}) が重複しています。既存のプールにマージまたは無視されます。",
+                    this
+                );
+                // ここでは無視する (またはマージするロジックを追加)
+                continue;
+            }
+
+            // このキー用のキューとプレハブ参照を辞書に登録
+            pooledObjects[key] = new Queue<GameObject>();
+            keyToPrefab[key] = poolInfo.prefab;
+
+            // Debug.Log($"Initializing pool '{key}' for prefab '{poolInfo.prefab.name}' with size {poolInfo.initialSize}");
+
+            // 指定された初期数を生成
+            for (int i = 0; i < poolInfo.initialSize; i++)
+            {
+                InstantiateAndPoolObject(key, poolInfo.prefab);
+            }
+        }
+    }
+
+    // 実際にオブジェクトを生成してプールする内部メソッド
+    private GameObject InstantiateAndPoolObject(string key, GameObject prefab)
+    {
+        GameObject newObj = Instantiate(prefab);
+        if (newObj != null)
+        {
+            // ★ PooledObject コンポーネントを追加 (または取得) し、キーとプーラーを設定
+            PooledObject pooledComp = newObj.GetComponent<PooledObject>();
+            if (pooledComp == null)
+            {
+                pooledComp = newObj.AddComponent<PooledObject>();
+            }
+            pooledComp.poolKey = key;
+            pooledComp.ownerPooler = this; // このプーラーへの参照を渡す
+
+            newObj.SetActive(false); // 非アクティブに
+            newObj.transform.SetParent(this.transform); // 子にして整理
+            pooledObjects[key].Enqueue(newObj); // 対応するキューに追加
+        }
+        else
+        {
+            Debug.LogError(
+                $"プレハブ '{prefab?.name}' の Instantiate に失敗しました (Key: {key})。",
+                this
+            );
+        }
+        return newObj; // 生成されたオブジェクトを返す (null の可能性あり)
+    }
+
+    // --- オブジェクト取得メソッド (キー指定) ---
+    public GameObject GetObject(string key)
+    {
+        if (string.IsNullOrEmpty(key))
+        {
+            Debug.LogError("GetObject のキーが null または空です。", this);
+            return null;
+        }
+
+        if (pooledObjects.TryGetValue(key, out Queue<GameObject> queue))
+        {
+            if (queue.Count > 0)
+            {
+                GameObject obj = queue.Dequeue();
+                // obj.SetActive(true); // ここでは有効化しない (呼び出し元で制御)
+                return obj;
+            }
+            else if (allowDynamicInstantiation && keyToPrefab.ContainsKey(key))
+            {
+                // プールは空だが動的生成が許可されている場合
+                // Debug.LogWarning($"Pool '{key}' is empty. Instantiating new object dynamically.");
+                // ★ 新しく生成する場合は PooledObject の設定が必要なので InstantiateAndPoolObject を経由しない方が良い？
+                //    しかしキューに入れない一時的なオブジェクトを返す必要がある。
+                //    ここでは、Instantiateだけして返し、Return時にプールに追加する方針をとる。
+                GameObject prefab = keyToPrefab[key];
+                GameObject newObj = Instantiate(prefab);
+                if (newObj != null)
+                {
+                    PooledObject pooledComp = newObj.GetComponent<PooledObject>();
+                    if (pooledComp == null)
+                        pooledComp = newObj.AddComponent<PooledObject>();
+                    pooledComp.poolKey = key;
+                    pooledComp.ownerPooler = this;
+                    newObj.transform.SetParent(this.transform); // プーラーの子にはしておく
+                    // newObj.SetActive(true); // ここでは有効化しない
+                    return newObj;
+                }
+                else
+                {
+                    Debug.LogError(
+                        $"Failed to dynamically instantiate prefab for key '{key}'.",
+                        this
+                    );
+                    return null;
+                }
+            }
+            else
+            {
+                Debug.LogWarning(
+                    $"Pool for key '{key}' is empty and dynamic instantiation is disabled or prefab missing.",
+                    this
+                );
+                return null; // プール空＆動的生成不可 or プレハブ不明
+            }
+        }
+        else
+        {
+            Debug.LogError($"キー '{key}' に対応するプールが見つかりません。", this);
+            return null; // 指定されたキーのプールが存在しない
+        }
+    }
+
+    // --- オブジェクト取得メソッド (プレハブ指定) ---
+    // 内部的にはプレハブからキーを生成して GetObject(key) を呼び出す
+    public GameObject GetObject(GameObject prefab)
+    {
+        if (prefab == null)
+        {
+            Debug.LogError("GetObject に null プレハブが渡されました。", this);
+            return null;
+        }
+        // キーは InstanceID 文字列とする (PoolInfo で string キーが設定されていてもこれで取得可能にするか検討)
+        string key = prefab.GetInstanceID().ToString();
+
+        // ★ 重要: このプレハブが PoolInfo リストに含まれて初期化されているか確認するロジックが必要
+        if (!keyToPrefab.ContainsKey(key))
+        {
+            Debug.LogError(
+                $"プレハブ '{prefab.name}' (Key: {key}) はプーラーに登録されていません。PoolInfo を確認してください。",
+                this
+            );
+            // ここで動的にプールを追加する選択肢もあるが、今回はエラーとする
+            return null;
+        }
+
+        return GetObject(key); // キーを使って取得
+    }
+
+    // --- オブジェクト返却メソッド ---
+    // PooledObject コンポーネントからキーとプーラーを取得して正しい場所に戻す
+    public void ReturnObject(GameObject obj)
+    {
+        if (obj == null)
+        {
+            Debug.LogWarning("ReturnObject に null が渡されました。", this);
+            return;
+        }
+
+        PooledObject pooledComp = obj.GetComponent<PooledObject>();
+
+        if (
+            pooledComp == null
+            || string.IsNullOrEmpty(pooledComp.poolKey)
+            || pooledComp.ownerPooler != this
+        )
+        {
+            // このプーラー管理外のオブジェクトか、情報が欠けている場合
+            Debug.LogWarning(
+                $"返却しようとしたオブジェクト '{obj.name}' はこのプーラー管理外か、情報が不足しています。Destroy します。",
+                obj
+            );
+            Destroy(obj); // プール管理外なので普通に破棄
+            return;
+        }
+
+        // 正しいプーラーからのオブジェクトの場合
+        if (pooledObjects.TryGetValue(pooledComp.poolKey, out Queue<GameObject> queue))
+        {
+            // 返却前に行うリセット処理 (必要に応じて)
+            obj.transform.SetParent(this.transform); // 念のため親を再設定
+            // obj.transform.position = Vector3.zero; // 位置リセット (任意)
+            obj.transform.rotation = Quaternion.identity; // 回転リセット (推奨)
+            // Rigidbody の速度をリセット (任意)
+            Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+            }
+
+            obj.SetActive(false); // 非アクティブ化
+            queue.Enqueue(obj); // 正しいキューに追加
+        }
+        else
+        {
+            Debug.LogError(
+                $"返却されたオブジェクトのキー '{pooledComp.poolKey}' に対応するプールが見つかりません！オブジェクト '{obj.name}' を Destroy します。",
+                obj
+            );
+            Destroy(obj);
+        }
+    }
+
+    // --- オブジェクト返却メソッド (下位互換や他の呼び出し方のため) ---
+    // キーを直接指定して返却 (通常は PooledObject から情報を得る方が安全)
+    public void ReturnObject(GameObject obj, string key)
+    {
+        if (obj == null || string.IsNullOrEmpty(key))
+        {
+            return;
+        }
+        // ★ 本来は、このobjが本当にkeyのプレハブから作られたか検証が必要だが省略
+        if (pooledObjects.TryGetValue(key, out Queue<GameObject> queue))
+        {
+            // 返却前処理...
+            obj.transform.SetParent(this.transform);
+            obj.transform.rotation = Quaternion.identity;
+            Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+            }
+            obj.SetActive(false);
+            queue.Enqueue(obj);
+        }
+        else
+        {
+            Debug.LogError(
+                $"キー '{key}' のプールが見つからず返却できません。Destroy します。",
+                obj
+            );
+            Destroy(obj);
+        }
+    }
+}

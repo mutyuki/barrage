@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="6" result="Failed(Child)" total="6" passed="2" failed="4" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2025-04-17 13:53:42Z" end-time="2025-04-17 13:53:44Z" duration="2.1109808">
+  <test-suite type="TestSuite" id="1012" name="barrage" fullname="barrage" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2025-04-17 13:53:42Z" end-time="2025-04-17 13:53:44Z" duration="2.110981" total="6" passed="2" failed="4" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1008" name="Tests.dll" fullname="/Users/kitamurareiki/develop/barrage/Library/ScriptAssemblies/Tests.dll" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2025-04-17 13:53:42Z" end-time="2025-04-17 13:53:44Z" duration="2.062412" total="6" passed="2" failed="4" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="19583" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestFixture" id="1001" name="GameplayPlayModeTests" fullname="GameplayPlayModeTests" classname="GameplayPlayModeTests" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2025-04-17 13:53:42Z" end-time="2025-04-17 13:53:44Z" duration="2.038983" total="6" passed="2" failed="4" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-case id="1005" name="Bullet_DisappearsAndReturnsToPool_AfterLifetime" fullname="GameplayPlayModeTests.Bullet_DisappearsAndReturnsToPool_AfterLifetime" methodname="Bullet_DisappearsAndReturnsToPool_AfterLifetime" classname="GameplayPlayModeTests" runstate="Runnable" seed="1786630876" result="Failed" start-time="2025-04-17 13:53:42Z" end-time="2025-04-17 13:53:42Z" duration="0.242795" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Unhandled log message: '[Error] Tag: Wall is not defined.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+            <stack-trace><![CDATA[UnityEngine.Component:CompareTag (string)
+BulletController:OnTriggerEnter2D (UnityEngine.Collider2D) (at Assets/script/BulletController.cs:64)
+
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Executing Pattern: 
+Target with tag 'Untagged' not found. Firing forward.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+]]></output>
+        </test-case>
+        <test-case id="1004" name="Bullet_MovesUpward_WhenActivatedWithIdentityRotation" fullname="GameplayPlayModeTests.Bullet_MovesUpward_WhenActivatedWithIdentityRotation" methodname="Bullet_MovesUpward_WhenActivatedWithIdentityRotation" classname="GameplayPlayModeTests" runstate="Runnable" seed="548398543" result="Failed" start-time="2025-04-17 13:53:42Z" end-time="2025-04-17 13:53:43Z" duration="0.682682" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Unhandled log message: '[Error] Tag: Wall is not defined.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+            <stack-trace><![CDATA[UnityEngine.Component:CompareTag (string)
+BulletController:OnTriggerEnter2D (UnityEngine.Collider2D) (at Assets/script/BulletController.cs:64)
+
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Executing Pattern: 
+Target with tag 'Untagged' not found. Firing forward.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+]]></output>
+        </test-case>
+        <test-case id="1006" name="Enemy_FiresAimedShot_Forward_WhenTargetNotFound" fullname="GameplayPlayModeTests.Enemy_FiresAimedShot_Forward_WhenTargetNotFound" methodname="Enemy_FiresAimedShot_Forward_WhenTargetNotFound" classname="GameplayPlayModeTests" runstate="Runnable" seed="1181139656" result="Failed" start-time="2025-04-17 13:53:43Z" end-time="2025-04-17 13:53:43Z" duration="0.327008" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Unhandled log message: '[Error] Tag: Wall is not defined.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+            <stack-trace><![CDATA[UnityEngine.Component:CompareTag (string)
+BulletController:OnTriggerEnter2D (UnityEngine.Collider2D) (at Assets/script/BulletController.cs:64)
+
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Executing Pattern: 
+Target with tag 'Untagged' not found. Firing forward.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+]]></output>
+        </test-case>
+        <test-case id="1007" name="Enemy_FiresFanShot_WithCorrectCountAndApproximateSpread" fullname="GameplayPlayModeTests.Enemy_FiresFanShot_WithCorrectCountAndApproximateSpread" methodname="Enemy_FiresFanShot_WithCorrectCountAndApproximateSpread" classname="GameplayPlayModeTests" runstate="Runnable" seed="470644202" result="Failed" start-time="2025-04-17 13:53:43Z" end-time="2025-04-17 13:53:44Z" duration="0.568511" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Unhandled log message: '[Error] Tag: Wall is not defined.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+            <stack-trace><![CDATA[UnityEngine.Component:CompareTag (string)
+BulletController:OnTriggerEnter2D (UnityEngine.Collider2D) (at Assets/script/BulletController.cs:64)
+
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Executing Pattern: 
+Target with tag 'Untagged' not found. Firing forward.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Tag: Wall is not defined.
+Executing Pattern: 
+]]></output>
+        </test-case>
+        <test-case id="1002" name="Pooler_GetBullet_ReturnsInactiveObjectAndDecreasesPoolCount" fullname="GameplayPlayModeTests.Pooler_GetBullet_ReturnsInactiveObjectAndDecreasesPoolCount" methodname="Pooler_GetBullet_ReturnsInactiveObjectAndDecreasesPoolCount" classname="GameplayPlayModeTests" runstate="Runnable" seed="1370585680" result="Passed" start-time="2025-04-17 13:53:44Z" end-time="2025-04-17 13:53:44Z" duration="0.067181" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Executing Pattern: 
+Target with tag 'Untagged' not found. Firing forward.
+]]></output>
+        </test-case>
+        <test-case id="1003" name="Pooler_ReturnBullet_DeactivatesObjectAndIncreasesPoolCount" fullname="GameplayPlayModeTests.Pooler_ReturnBullet_DeactivatesObjectAndIncreasesPoolCount" methodname="Pooler_ReturnBullet_DeactivatesObjectAndIncreasesPoolCount" classname="GameplayPlayModeTests" runstate="Runnable" seed="2024856629" result="Passed" start-time="2025-04-17 13:53:44Z" end-time="2025-04-17 13:53:44Z" duration="0.072772" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Executing Pattern: 
+Target with tag 'Untagged' not found. Firing forward.
+Saving results to: /Users/kitamurareiki/Library/Application Support/DefaultCompany/barrage/TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

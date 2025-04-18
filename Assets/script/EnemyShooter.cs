@@ -1,73 +1,70 @@
+// EnemyController.cs や EnemyShooter.cs を修正・作成
+using System.Collections;
+using System.Collections.Generic; // List を使う場合
 using UnityEngine;
 
-public class EnemyShooter : MonoBehaviour
+public class EnemyPatternController : MonoBehaviour
 {
-    public Transform firePoint; // 弾の発射位置を示すTransform
-    public float fireRate = 1f; // 発射間隔（秒）
+    public Transform firePoint;
+    public List<BarragePatternData> attackPatterns; // 攻撃パターンのリスト
+    public float attackInterval = 2f; // 次の攻撃までの間隔
 
-    // public GameObject bulletPrefab;  // プーラーを使うので直接は不要になるかも
-    public float bulletSpeed = 10f; // 発射する弾の速度（BulletControllerのデフォルトを使うなら不要）
-    public float bulletLifetime = 3f; // 発射する弾の寿命（BulletControllerのデフォルトを使うなら不要）
-
-    private float nextFireTime = 0f; // 次に発射可能な時間
-    private SimpleObjectPooler pooler; // オブジェクトプーラーへの参照
+    private AdvancedObjectPooler pooler;
+    private int currentPatternIndex = 0;
 
     void Start()
     {
-        // プーラーのインスタンスを取得
-        pooler = SimpleObjectPooler.Instance;
+        pooler = AdvancedObjectPooler.Instance;
         if (pooler == null)
         {
-            Debug.LogError("SimpleObjectPooler instance not found! EnemyShooter cannot fire.");
+            Debug.LogError("Pooler not found!");
+            enabled = false;
+            return;
         }
         if (firePoint == null)
         {
-            Debug.LogError("Fire Point not set on EnemyShooter!");
-            enabled = false; // 発射ポイントがないなら動作しないようにする
+            Debug.LogError("FirePoint not set!");
+            enabled = false;
+            return;
         }
+        if (attackPatterns == null || attackPatterns.Count == 0)
+        {
+            Debug.LogError("No Attack Patterns assigned!");
+            enabled = false;
+            return;
+        }
+
+        // 定期的に攻撃を開始するコルーチンを開始
+        StartCoroutine(AttackRoutine());
     }
 
-    void Update()
+    IEnumerator AttackRoutine()
     {
-        if (pooler == null)
-            return; // プーラーがない場合は何もしない
-
-        // 発射時間になったら
-        if (Time.time >= nextFireTime)
+        while (true) // 無限ループ（敵が生きている間）
         {
-            Shoot(); // 発射処理
-            nextFireTime = Time.time + fireRate; // 次の発射時間を設定
-        }
-    }
-
-    void Shoot()
-    {
-        // プールから弾を取得
-        GameObject bulletGO = pooler.GetBullet();
-
-        if (bulletGO != null)
-        {
-            // 弾の位置と向きをFirePointに合わせる
-            bulletGO.transform.position = firePoint.position;
-            bulletGO.transform.rotation = firePoint.rotation;
-
-            // (オプション) 弾の速度や寿命をここで上書きする場合
-            BulletController bulletController = bulletGO.GetComponent<BulletController>();
-            if (bulletController != null)
+            // パターンリストから実行するパターンを選択（ここでは順番に実行）
+            if (currentPatternIndex >= attackPatterns.Count)
             {
-                bulletController.speed = this.bulletSpeed; // この敵固有の速度設定など
-                bulletController.lifetime = this.bulletLifetime;
-                // bulletController.Initialize(this.bulletSpeed, this.bulletLifetime); // Initializeメソッドがある場合
+                currentPatternIndex = 0; // 最後まで行ったら最初に戻る
             }
 
-            // 弾をアクティブにする
-            bulletGO.SetActive(true);
+            BarragePatternData currentPattern = attackPatterns[currentPatternIndex];
 
-            Debug.Log("Fired a bullet!");
-        }
-        else
-        {
-            Debug.LogWarning("Could not get bullet from pool."); // プールから取得失敗
+            if (currentPattern != null)
+            {
+                Debug.Log($"Executing Pattern: {currentPattern.name}");
+                // 選択したパターンの実行メソッドを呼び出す (コルーチンで実行)
+                yield return StartCoroutine(currentPattern.ExecutePattern(firePoint, pooler));
+            }
+            else
+            {
+                Debug.LogWarning($"Pattern at index {currentPatternIndex} is null.");
+            }
+
+            currentPatternIndex++; // 次のパターンへ
+
+            // 次の攻撃までの待機時間
+            yield return new WaitForSeconds(attackInterval);
         }
     }
 }

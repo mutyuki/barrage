@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="6" result="Failed(Child)" total="6" passed="0" failed="6" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2025-04-17 13:45:58Z" end-time="2025-04-17 13:45:58Z" duration="0.58396">
+  <test-suite type="TestSuite" id="1012" name="barrage" fullname="barrage" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2025-04-17 13:45:58Z" end-time="2025-04-17 13:45:58Z" duration="0.583960" total="6" passed="0" failed="6" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1008" name="Tests.dll" fullname="/Users/kitamurareiki/develop/barrage/Library/ScriptAssemblies/Tests.dll" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2025-04-17 13:45:58Z" end-time="2025-04-17 13:45:58Z" duration="0.513513" total="6" passed="0" failed="6" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="19583" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestFixture" id="1001" name="GameplayPlayModeTests" fullname="GameplayPlayModeTests" classname="GameplayPlayModeTests" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2025-04-17 13:45:58Z" end-time="2025-04-17 13:45:58Z" duration="0.478845" total="6" passed="0" failed="6" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-case id="1005" name="Bullet_DisappearsAndReturnsToPool_AfterLifetime" fullname="GameplayPlayModeTests.Bullet_DisappearsAndReturnsToPool_AfterLifetime" methodname="Bullet_DisappearsAndReturnsToPool_AfterLifetime" classname="GameplayPlayModeTests" runstate="Runnable" seed="1109712785" result="Failed" start-time="2025-04-17 13:45:58Z" end-time="2025-04-17 13:45:58Z" duration="0.186664" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[SetUp : Unhandled log message: '[Error] Tag: EnemyBullet is not defined.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+            <stack-trace><![CDATA[UnityEngine.GameObject:set_tag (string)
+GameplayPlayModeTests/<SetUp>d__8:MoveNext () (at Assets/Tests/GamePlayTests/GameplayPlayModeTests.cs:36)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Tag: EnemyBullet is not defined.
+Executing Pattern: 
+UnityException: Tag: NonExistentTag is not defined.
+UnityEngine.GameObject.FindGameObjectWithTag (System.String tag) (at <c84c2eeebc11490f899efc6438eb2c10>:0)
+UnityEngine.GameObject.FindWithTag (System.String tag) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/GameObject.bindings.cs:211)
+AimedPatternData+<ExecutePattern>d__3.MoveNext () (at Assets/script/AttackPattern/AimedPatternData.cs:18)
+UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+<AttackRoutine>d__6:MoveNext() (at Assets/script/EnemyShooter.cs:57)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+EnemyPatternController:Start() (at Assets/script/EnemyShooter.cs:38)
+
+]]></output>
+        </test-case>
+        <test-case id="1004" name="Bullet_MovesUpward_WhenActivatedWithIdentityRotation" fullname="GameplayPlayModeTests.Bullet_MovesUpward_WhenActivatedWithIdentityRotation" methodname="Bullet_MovesUpward_WhenActivatedWithIdentityRotation" classname="GameplayPlayModeTests" runstate="Runnable" seed="1708932412" result="Failed" start-time="2025-04-17 13:45:58Z" end-time="2025-04-17 13:45:58Z" duration="0.082078" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[SetUp : Unhandled log message: '[Error] Tag: EnemyBullet is not defined.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+            <stack-trace><![CDATA[UnityEngine.GameObject:set_tag (string)
+GameplayPlayModeTests/<SetUp>d__8:MoveNext () (at Assets/Tests/GamePlayTests/GameplayPlayModeTests.cs:36)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Tag: EnemyBullet is not defined.
+Executing Pattern: 
+UnityException: Tag: NonExistentTag is not defined.
+UnityEngine.GameObject.FindGameObjectWithTag (System.String tag) (at <c84c2eeebc11490f899efc6438eb2c10>:0)
+UnityEngine.GameObject.FindWithTag (System.String tag) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/GameObject.bindings.cs:211)
+AimedPatternData+<ExecutePattern>d__3.MoveNext () (at Assets/script/AttackPattern/AimedPatternData.cs:18)
+UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+<AttackRoutine>d__6:MoveNext() (at Assets/script/EnemyShooter.cs:57)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+EnemyPatternController:Start() (at Assets/script/EnemyShooter.cs:38)
+
+]]></output>
+        </test-case>
+        <test-case id="1006" name="Enemy_FiresAimedShot_Forward_WhenTargetNotFound" fullname="GameplayPlayModeTests.Enemy_FiresAimedShot_Forward_WhenTargetNotFound" methodname="Enemy_FiresAimedShot_Forward_WhenTargetNotFound" classname="GameplayPlayModeTests" runstate="Runnable" seed="217587714" result="Failed" start-time="2025-04-17 13:45:58Z" end-time="2025-04-17 13:45:58Z" duration="0.022063" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[SetUp : Unhandled log message: '[Error] Tag: EnemyBullet is not defined.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+            <stack-trace><![CDATA[UnityEngine.GameObject:set_tag (string)
+GameplayPlayModeTests/<SetUp>d__8:MoveNext () (at Assets/Tests/GamePlayTests/GameplayPlayModeTests.cs:36)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Tag: EnemyBullet is not defined.
+Executing Pattern: 
+UnityException: Tag: NonExistentTag is not defined.
+UnityEngine.GameObject.FindGameObjectWithTag (System.String tag) (at <c84c2eeebc11490f899efc6438eb2c10>:0)
+UnityEngine.GameObject.FindWithTag (System.String tag) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/GameObject.bindings.cs:211)
+AimedPatternData+<ExecutePattern>d__3.MoveNext () (at Assets/script/AttackPattern/AimedPatternData.cs:18)
+UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+<AttackRoutine>d__6:MoveNext() (at Assets/script/EnemyShooter.cs:57)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+EnemyPatternController:Start() (at Assets/script/EnemyShooter.cs:38)
+
+]]></output>
+        </test-case>
+        <test-case id="1007" name="Enemy_FiresFanShot_WithCorrectCountAndApproximateSpread" fullname="GameplayPlayModeTests.Enemy_FiresFanShot_WithCorrectCountAndApproximateSpread" methodname="Enemy_FiresFanShot_WithCorrectCountAndApproximateSpread" classname="GameplayPlayModeTests" runstate="Runnable" seed="1805097026" result="Failed" start-time="2025-04-17 13:45:58Z" end-time="2025-04-17 13:45:58Z" duration="0.018585" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[SetUp : Unhandled log message: '[Error] Tag: EnemyBullet is not defined.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+            <stack-trace><![CDATA[UnityEngine.GameObject:set_tag (string)
+GameplayPlayModeTests/<SetUp>d__8:MoveNext () (at Assets/Tests/GamePlayTests/GameplayPlayModeTests.cs:36)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Tag: EnemyBullet is not defined.
+Executing Pattern: 
+UnityException: Tag: NonExistentTag is not defined.
+UnityEngine.GameObject.FindGameObjectWithTag (System.String tag) (at <c84c2eeebc11490f899efc6438eb2c10>:0)
+UnityEngine.GameObject.FindWithTag (System.String tag) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/GameObject.bindings.cs:211)
+AimedPatternData+<ExecutePattern>d__3.MoveNext () (at Assets/script/AttackPattern/AimedPatternData.cs:18)
+UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+<AttackRoutine>d__6:MoveNext() (at Assets/script/EnemyShooter.cs:57)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+EnemyPatternController:Start() (at Assets/script/EnemyShooter.cs:38)
+
+]]></output>
+        </test-case>
+        <test-case id="1002" name="Pooler_GetBullet_ReturnsInactiveObjectAndDecreasesPoolCount" fullname="GameplayPlayModeTests.Pooler_GetBullet_ReturnsInactiveObjectAndDecreasesPoolCount" methodname="Pooler_GetBullet_ReturnsInactiveObjectAndDecreasesPoolCount" classname="GameplayPlayModeTests" runstate="Runnable" seed="965059569" result="Failed" start-time="2025-04-17 13:45:58Z" end-time="2025-04-17 13:45:58Z" duration="0.021776" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[SetUp : Unhandled log message: '[Error] Tag: EnemyBullet is not defined.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+            <stack-trace><![CDATA[UnityEngine.GameObject:set_tag (string)
+GameplayPlayModeTests/<SetUp>d__8:MoveNext () (at Assets/Tests/GamePlayTests/GameplayPlayModeTests.cs:36)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Tag: EnemyBullet is not defined.
+Executing Pattern: 
+UnityException: Tag: NonExistentTag is not defined.
+UnityEngine.GameObject.FindGameObjectWithTag (System.String tag) (at <c84c2eeebc11490f899efc6438eb2c10>:0)
+UnityEngine.GameObject.FindWithTag (System.String tag) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/GameObject.bindings.cs:211)
+AimedPatternData+<ExecutePattern>d__3.MoveNext () (at Assets/script/AttackPattern/AimedPatternData.cs:18)
+UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+<AttackRoutine>d__6:MoveNext() (at Assets/script/EnemyShooter.cs:57)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+EnemyPatternController:Start() (at Assets/script/EnemyShooter.cs:38)
+
+]]></output>
+        </test-case>
+        <test-case id="1003" name="Pooler_ReturnBullet_DeactivatesObjectAndIncreasesPoolCount" fullname="GameplayPlayModeTests.Pooler_ReturnBullet_DeactivatesObjectAndIncreasesPoolCount" methodname="Pooler_ReturnBullet_DeactivatesObjectAndIncreasesPoolCount" classname="GameplayPlayModeTests" runstate="Runnable" seed="1135838111" result="Failed" start-time="2025-04-17 13:45:58Z" end-time="2025-04-17 13:45:58Z" duration="0.070481" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[SetUp : Unhandled log message: '[Error] Tag: EnemyBullet is not defined.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+            <stack-trace><![CDATA[UnityEngine.GameObject:set_tag (string)
+GameplayPlayModeTests/<SetUp>d__8:MoveNext () (at Assets/Tests/GamePlayTests/GameplayPlayModeTests.cs:36)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Tag: EnemyBullet is not defined.
+Executing Pattern: 
+UnityException: Tag: NonExistentTag is not defined.
+UnityEngine.GameObject.FindGameObjectWithTag (System.String tag) (at <c84c2eeebc11490f899efc6438eb2c10>:0)
+UnityEngine.GameObject.FindWithTag (System.String tag) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/GameObject.bindings.cs:211)
+AimedPatternData+<ExecutePattern>d__3.MoveNext () (at Assets/script/AttackPattern/AimedPatternData.cs:18)
+UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+<AttackRoutine>d__6:MoveNext() (at Assets/script/EnemyShooter.cs:57)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+EnemyPatternController:Start() (at Assets/script/EnemyShooter.cs:38)
+
+Saving results to: /Users/kitamurareiki/Library/Application Support/DefaultCompany/barrage/TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
